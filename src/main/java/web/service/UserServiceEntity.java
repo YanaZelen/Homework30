@@ -51,11 +51,5 @@ public class UserServiceEntity {
     return repo.existsUserById(id);
   }
 
-  public void updateUser(User user) {
-    if (!repo.existsUserById(user.getId())) {
-      throw new RuntimeException("Не удалось найти пользователя с id:" + user.getId());
-    }
-    repo.save(user);
-  }
 
 }

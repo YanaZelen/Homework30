@@ -56,7 +56,7 @@
         </#list>
     </table>
 
-    <a href="/post/add">
+    <a href="/post/add/${user.id}">
         <button>Добавить новый</button>
     </a>
 

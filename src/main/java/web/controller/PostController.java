@@ -13,6 +13,7 @@ import web.service.PostService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping(value = "/post")
@@ -21,16 +22,12 @@ public class PostController {
 
     private final PostService postService;
 
-
-    @GetMapping(value = "/post/list")
-    public String userPosts(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        model.addAttribute("postList", postService.findAll());
-        return "usersPosts";
-    }
-
     @GetMapping(value = "/post/add/{id}")
-    public String addPost(HttpServletRequest request) {
+    public String addPost(HttpServletRequest request, @PathVariable("id") Long id, Model model) {
+        User user = postService.userById(id);
+        LocalDate date = LocalDate.now();
+        model.addAttribute("user", user);
+        model.addAttribute("date", date);
         return "addPost";
     }
 
@@ -41,8 +38,8 @@ public class PostController {
     }
 
     @GetMapping(value = "/post/delete/{id}")
-    public String deletePost(HttpServletRequest request, Post post, Model model) {
-        postService.delete(post);
+    public String deletePost(HttpServletRequest request, @PathVariable("id") Long id, Model model) {
+        postService.deleteById(id);
         model.addAttribute("postList", postService.findAll());
         return "redirect:/post/list";
     }
@@ -55,7 +52,7 @@ public class PostController {
     }
 
     @PostMapping(value = "/post/edit")
-    public String editUser(HttpServletRequest request, Post post, Model model) {
+    public String editPost(HttpServletRequest request, Post post, Model model) {
         postService.save(post);
         model.addAttribute("postList", postService.findAll());
         return "redirect:/post/list";
