@@ -1,4 +1,4 @@
-package model;
+package web.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +24,6 @@ public class User {
   @OneToMany
   @JoinColumn(name = "user_id")
   @ToString.Exclude
-  private List<Order> orders;
+  private List<Post> posts;
 
 }

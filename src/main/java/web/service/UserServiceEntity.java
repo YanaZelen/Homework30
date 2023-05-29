@@ -1,4 +1,4 @@
-package service;
+package web.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,11 +11,12 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class UserService {
+public class UserServiceEntity {
   private final UserRepository repo;
 
-  public List<User> findAllUsers() {
-    return repo.findAll();
+  public List<User> findAll() {
+    List<User> all = repo.findAll();
+    return all;
   }
 
   public User findUserById(Long id) {
@@ -27,7 +28,11 @@ public class UserService {
   }
 
   public void deleteUser(User user) {
-    repo.save(user);
+    repo.delete(user);
+  }
+
+  public void deleteUserById(Long id) {
+    repo.deleteById(id);
   }
 
   public boolean existUser(String name, String password) {
@@ -38,5 +43,19 @@ public class UserService {
     return repo.findUserByName(name);
   }
 
+  public User getById(Long id) {
+    return repo.findById(id).get();
+  }
+
+  public boolean existsUserById(Long id) {
+    return repo.existsUserById(id);
+  }
+
+  public void updateUser(User user) {
+    if (!repo.existsUserById(user.getId())) {
+      throw new RuntimeException("Не удалось найти пользователя с id:" + user.getId());
+    }
+    repo.save(user);
+  }
 
 }

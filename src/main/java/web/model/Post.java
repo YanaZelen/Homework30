@@ -1,4 +1,4 @@
-package model;
+package web.model;
 
 
 import lombok.AllArgsConstructor;
@@ -13,20 +13,18 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "orders")
+@Table(name = "posts")
 @Data
-public class Order {
+public class Post {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  private String name;
+  private String title;
 
-  @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
-  @ToString.Exclude
-  private List<Product> products;
+  private String text;
 
   @ManyToOne(fetch = FetchType.EAGER)
   private User user;
 
-  private LocalDate createDate;
+  private LocalDate date;
 }
