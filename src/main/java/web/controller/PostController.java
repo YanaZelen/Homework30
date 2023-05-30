@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import web.model.Post;
 import web.model.User;
 import web.service.PostService;
+import web.service.UserServiceEntity;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,27 +22,28 @@ import java.time.LocalDate;
 public class PostController {
 
     private final PostService postService;
+    private final UserServiceEntity userService;
 
     @GetMapping(value = "/post/add/{id}")
     public String addPost(HttpServletRequest request, @PathVariable("id") Long id, Model model) {
-        User user = postService.userById(id);
-        LocalDate date = LocalDate.now();
-        model.addAttribute("user", user);
-        model.addAttribute("date", date);
         return "addPost";
     }
 
-    @PostMapping(value = "/post/add")
-    public String addPost(Post post) {
+    @PostMapping(value = "/post/add/{id}")
+    public String addPost(Post post, @PathVariable("id") Long id) {
+        User user = postService.userById(id);
+        post.setUser(user);
+        post.setDate(LocalDate.now());
         postService.save(post);
-        return "redirect:/post/list";
+        return "redirect:/user/posts/{id}";
     }
 
     @GetMapping(value = "/post/delete/{id}")
-    public String deletePost(HttpServletRequest request, @PathVariable("id") Long id, Model model) {
-        postService.deleteById(id);
-        model.addAttribute("postList", postService.findAll());
-        return "redirect:/post/list";
+    public String deletePost(HttpServletRequest request, Post post, Model model) {
+        postService.deletePost(post);
+        User user = userService.findUserByPosts(post);
+        model.addAttribute("postListByUser", postService.allUsersPostsById(user));
+        return "redirect:/user/posts/{id}";
     }
 
     @GetMapping(value = "/post/edit/{id}")
@@ -51,11 +53,11 @@ public class PostController {
         return "editPost";
     }
 
-    @PostMapping(value = "/post/edit")
+    @PostMapping(value = "/post/edit/{id}")
     public String editPost(HttpServletRequest request, Post post, Model model) {
         postService.save(post);
         model.addAttribute("postList", postService.findAll());
-        return "redirect:/post/list";
+        return "redirect:/user/posts/{id}";
     }
 
 }

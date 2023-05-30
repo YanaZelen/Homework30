@@ -9,10 +9,9 @@
 
 <fieldset>
     <legend>Добавить пост</legend>
-    <form name="post" action="/post/add" method="post">
+    <form name="post" action="/post/add/{id}" method="post">
         Заголовок: <input type="text" name="title" /><br/>
         Текст: <input type="text" name="text" /><br/>
-        <input type="date" name="date" value="${date.dayOfMonth}.${date.dayOfWeek}" readonly/><br/>
         <input type="submit" value="Save" />
     </form>
 </fieldset>

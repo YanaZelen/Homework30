@@ -38,6 +38,7 @@
             <td>Информация</td>
         </tr>
         <#list postListByUser as post>
+        <#if post.user.id == user.id>
             <tr>
                 <td>${post.title}</td>
                 <td>
@@ -53,6 +54,7 @@
                     </a>
                 </td>
             </tr>
+        </#if>
         </#list>
     </table>
 

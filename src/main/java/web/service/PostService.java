@@ -30,6 +30,10 @@ public class PostService {
     repo.deleteById(id);
   }
 
+  public void deletePost(Post post) {
+    repo.delete(post);
+  }
+
   public List<Post> allUsersPostsById(User user) {
     List<Post> all = repo.findAllByUser(user);
     return all;
@@ -42,4 +46,5 @@ public class PostService {
   public User userById(Long id) {
     return userRepo.findUserById(id);
   }
+
 }

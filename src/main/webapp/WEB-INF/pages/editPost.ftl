@@ -9,7 +9,7 @@
 
 <fieldset>
     <legend>Редактировать пост</legend>
-    <form name="post" action="/post/edit" method="post">
+    <form name="post" action="/post/edit{id}" method="post">
         Идентификатор : <input type="number" name="id" value="${post.id}" readonly /><br/>
         Заголовок : <input type="text" name="title" value="${post.title}"/><br/>
         Текст: <input type="text" name="text" value="${post.text}"/><br/>

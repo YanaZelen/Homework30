@@ -3,6 +3,7 @@ package web.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import web.model.Post;
 import web.model.User;
 import web.repository.UserRepository;
 
@@ -51,5 +52,8 @@ public class UserServiceEntity {
     return repo.existsUserById(id);
   }
 
+ public User findUserByPosts(Post post) {
+   return repo.findUserByPosts(post);
+ }
 
 }
