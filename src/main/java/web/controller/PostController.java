@@ -17,7 +17,6 @@ import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 
 @Controller
-@RequestMapping(value = "/post")
 @RequiredArgsConstructor
 public class PostController {
 
@@ -25,16 +24,17 @@ public class PostController {
     private final UserServiceEntity userService;
 
     @GetMapping(value = "/post/add/{id}")
-    public String addPost(HttpServletRequest request, @PathVariable("id") Long id, Model model) {
+    public String addPost(@PathVariable String id) {
         return "addPost";
     }
 
     @PostMapping(value = "/post/add/{id}")
-    public String addPost(Post post, @PathVariable("id") Long id) {
-        User user = postService.userById(id);
+    public String addPost(HttpServletRequest request, Post post, Model model) {
+        User user = userService.findUserByPosts(post);
         post.setUser(user);
         post.setDate(LocalDate.now());
         postService.save(post);
+        model.addAttribute("postListByUser", postService.allUsersPostsById(user));
         return "redirect:/user/posts/{id}";
     }
 
@@ -56,7 +56,8 @@ public class PostController {
     @PostMapping(value = "/post/edit/{id}")
     public String editPost(HttpServletRequest request, Post post, Model model) {
         postService.save(post);
-        model.addAttribute("postList", postService.findAll());
+        User user = userService.findUserByPosts(post);
+        model.addAttribute("postListByUser", postService.allUsersPostsById(user));
         return "redirect:/user/posts/{id}";
     }
 
