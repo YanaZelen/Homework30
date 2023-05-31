@@ -20,10 +20,6 @@ public class UserServiceEntity {
     return all;
   }
 
-  public User findUserById(Long id) {
-    return repo.findUserById(id);
-  }
-
   public void addUser(User user) {
     repo.save(user);
   }
@@ -32,24 +28,8 @@ public class UserServiceEntity {
     repo.delete(user);
   }
 
-  public void deleteUserById(Long id) {
-    repo.deleteById(id);
-  }
-
-  public boolean existUser(String name, String password) {
-    return repo.existsUserByNameAndPassword(name, password);
-  }
-
-  public User getByName(String name) {
-    return repo.findUserByName(name);
-  }
-
   public User getById(Long id) {
     return repo.findById(id).get();
-  }
-
-  public boolean existsUserById(Long id) {
-    return repo.existsUserById(id);
   }
 
  public User findUserByPosts(Post post) {
