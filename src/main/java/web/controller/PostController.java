@@ -24,7 +24,9 @@ public class PostController {
     private final UserServiceEntity userService;
 
     @GetMapping(value = "/post/add/{id}")
-    public String addPost(@PathVariable String id) {
+    public String addPost( @PathVariable("id") Long id, Model model) {
+        User user = userService.getById(id);
+        model.addAttribute("user", user);
         return "addPost";
     }
 
@@ -49,7 +51,9 @@ public class PostController {
     @GetMapping(value = "/post/edit/{id}")
     public String editPost(HttpServletRequest request, @PathVariable("id") Long id, Model model) {
         Post post = postService.getById(id);
+        User user = userService.findUserByPosts(post);
         model.addAttribute("post", post);
+        model.addAttribute("user", user);
         return "editPost";
     }
 
