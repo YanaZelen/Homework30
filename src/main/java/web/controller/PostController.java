@@ -23,14 +23,14 @@ public class PostController {
     private final PostService postService;
     private final UserServiceEntity userService;
 
-    @GetMapping(value = "/post/add/{id}")
+    @GetMapping(value = "/user/post/add/{id}")
     public String addPost( @PathVariable("id") Long id, Model model) {
         User user = userService.getById(id);
         model.addAttribute("user", user);
         return "addPost";
     }
 
-    @PostMapping(value = "/post/add/{id}")
+    @PostMapping(value = "/user/post/add/{id}")
     public String addPost(HttpServletRequest request, Post post, Model model) {
         User user = userService.findUserByPosts(post);
         post.setUser(user);
@@ -40,7 +40,7 @@ public class PostController {
         return "redirect:/user/posts/{id}";
     }
 
-    @GetMapping(value = "/post/delete/{id}")
+    @GetMapping(value = "/user/post/delete/{id}")
     public String deletePost(HttpServletRequest request, Post post, Model model) {
         postService.deletePost(post);
         User user = userService.findUserByPosts(post);
@@ -48,7 +48,7 @@ public class PostController {
         return "redirect:/user/posts/{id}";
     }
 
-    @GetMapping(value = "/post/edit/{id}")
+    @GetMapping(value = "/user/post/edit/{id}")
     public String editPost(HttpServletRequest request, @PathVariable("id") Long id, Model model) {
         Post post = postService.getById(id);
         User user = userService.findUserByPosts(post);
@@ -57,12 +57,11 @@ public class PostController {
         return "editPost";
     }
 
-    @PostMapping(value = "/post/edit/{id}")
+    @PostMapping(value = "/user/post/edit/{id}")
     public String editPost(HttpServletRequest request, Post post, Model model) {
         postService.save(post);
         User user = userService.findUserByPosts(post);
         model.addAttribute("postListByUser", postService.allUsersPostsById(user));
         return "redirect:/user/posts/{id}";
     }
-
 }

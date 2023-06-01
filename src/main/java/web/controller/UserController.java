@@ -15,12 +15,12 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @RequiredArgsConstructor
-public class FreemarkerController {
+public class UserController {
 
     private final UserServiceEntity userService;
     private final PostService postService;
-
-    @GetMapping(value = "/")
+/*
+    @GetMapping(value = "/user")
     public String userInfo(HttpServletRequest request, Model model) {
         model.addAttribute("userList", userService.findAll());
         return "index";
@@ -60,6 +60,8 @@ public class FreemarkerController {
         return "redirect:/";
     }
 
+ */
+
     @GetMapping(value = "/user/posts/{id}")
     public String usersPosts(HttpServletRequest request, Model model, @PathVariable("id") Long id) {
         HttpSession session = request.getSession();
@@ -68,4 +70,5 @@ public class FreemarkerController {
         model.addAttribute("postListByUser", postService.allUsersPostsById(user));
         return "usersPosts";
     }
+
 }
