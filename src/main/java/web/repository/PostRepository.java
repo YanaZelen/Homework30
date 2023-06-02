@@ -26,4 +26,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
   Page<Post> findByDate(LocalDate date, Pageable pageable);
 
   Page<Post> findByUserId(Long id, Pageable pageable);
+
+  List<Post> getPostByUser_Id(Long userId, Pageable pageable);
 }

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import web.model.Post;
 import web.model.User;
 import web.service.PostService;
-import web.service.UserServiceImpl;
+import web.service.UserServiceEntity;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
@@ -19,11 +19,11 @@ import java.time.LocalDate;
 public class PostController {
 
     private final PostService postService;
-    private final UserServiceImpl userService;
+    private final UserServiceEntity userService;
 
     @GetMapping(value = "/user/post/add/{id}")
     public String addPost( @PathVariable("id") Long id, Model model) {
-        User user = userService.getById(id);
+        User user = userService.get(id);
         model.addAttribute("user", user);
         return "addPost";
     }
