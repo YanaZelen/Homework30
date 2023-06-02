@@ -1,12 +1,11 @@
 package web.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import web.model.Post;
-import web.repository.PostRepository;
+import web.model.Task;
+import web.repository.TaskRepository;
 
 import java.util.List;
 
@@ -15,27 +14,27 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserDetailsService {
 
-    private final PostRepository postRepo;
+    private final TaskRepository taskRepo;
 
 
-    public Post save(Post post) {
-        return postRepo.save(post);
+    public Task save(Task task) {
+        return taskRepo.save(task);
     }
 
-    public List<Post> findAll() {
-        return (List<Post>) postRepo.findAll();
+    public List<Task> findAll() {
+        return (List<Task>) taskRepo.findAll();
     }
 
-    public Post get(long id) {
-        return postRepo.findById(id).get();
+    public Task get(long id) {
+        return taskRepo.findById(id).get();
     }
 
     public void delete(long id) {
-        postRepo.deleteById(id);
+        taskRepo.deleteById(id);
     }
 
-    public List<Post> findByUser(Long userId, Pageable pageable) {
-        return postRepo.getPostByUser_Id(userId, pageable);
+    public List<Task> findByUser(Long userId, Pageable pageable) {
+        return taskRepo.getTaskByUser_Id(userId, pageable);
     }
 
 

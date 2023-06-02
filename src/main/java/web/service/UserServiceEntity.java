@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import web.model.Role;
 import web.model.User;
-import web.model.Post;
 import web.repository.RoleRepository;
 import web.repository.UserRepository;
 
@@ -50,9 +49,5 @@ public class UserServiceEntity implements UserDetailsService, UserService {
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
         return this.userDetailsService.loadUserByUsername(repo.getUserByName(name));
 
-    }
-
-    public User findUserByPosts(Post post) {
-        return repo.findUserByPosts(post);
     }
 }
