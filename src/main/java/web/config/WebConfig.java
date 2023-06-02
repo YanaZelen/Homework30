@@ -29,7 +29,7 @@ public class WebConfig implements WebMvcConfigurer {
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(applicationContext);
-        templateResolver.setPrefix("/WEB-INF/pages1/");
+        templateResolver.setPrefix("/WEB-INF/pages/");
         templateResolver.setSuffix(".ftl");
         templateResolver.setCharacterEncoding("UTF-8");
         return templateResolver;
