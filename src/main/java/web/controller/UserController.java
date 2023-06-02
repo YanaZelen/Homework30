@@ -5,10 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import web.model.User;
 import web.service.PostService;
-import web.service.UserServiceEntity;
+import web.service.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,7 +16,7 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserServiceEntity userService;
+    private final UserServiceImpl userService;
     private final PostService postService;
 /*
     @GetMapping(value = "/user")
@@ -62,7 +61,7 @@ public class UserController {
 
  */
 
-    @GetMapping(value = "/user/posts/{id}")
+    @GetMapping(value = "/user/{id}")
     public String usersPosts(HttpServletRequest request, Model model, @PathVariable("id") Long id) {
         HttpSession session = request.getSession();
         User user = userService.getById(id);

@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import web.model.User;
-import web.service.UserService;
-import web.service.UserServiceEntity;
+import web.model.Role;
+import web.service.UserServiceImpl;
 
 import java.util.List;
 
@@ -18,10 +18,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdmimController {
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
     @GetMapping("/admin")
     public ModelAndView allUsers(){
-        List<User> users = userService.listAll();
+        List<User> users = userService.findAll();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin");
         modelAndView.addObject("users",users);
@@ -29,12 +29,11 @@ public class AdmimController {
     }
 
     @GetMapping("/admin/edit/{id}")
-    public ModelAndView editUser(@PathVariable("id") Integer id){
-        User user = userService.get(id);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("editUser");
-        modelAndView.addObject("user", user);
-        return modelAndView;
+    public String editUser(@PathVariable("id") Long id, Model model){
+        User user = userService.getById(id);
+        model.addAttribute("user", user);
+        model.addAttribute("roles", Role.values());
+        return "editUser";
     }
 
     @PostMapping("/admin/edit")
@@ -62,10 +61,10 @@ public class AdmimController {
     }
 
     @GetMapping("/admin/delete/{id}")
-    public ModelAndView deleteUser(@PathVariable("id") int id){
+    public ModelAndView deleteUser(@PathVariable("id") Long id){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/admin");
-        userService.delete(id);
+        userService.deleteById(id);
         return modelAndView;
     }
 }

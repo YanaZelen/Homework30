@@ -6,14 +6,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import web.model.Post;
 import web.model.User;
 import web.service.PostService;
-import web.service.UserServiceEntity;
+import web.service.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 
 @Controller
@@ -21,7 +19,7 @@ import java.time.LocalDate;
 public class PostController {
 
     private final PostService postService;
-    private final UserServiceEntity userService;
+    private final UserServiceImpl userService;
 
     @GetMapping(value = "/user/post/add/{id}")
     public String addPost( @PathVariable("id") Long id, Model model) {
